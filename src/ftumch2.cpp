@@ -142,16 +142,18 @@ int main(int argc, char* argv[])
       fail = true;
     }
 
+  
   ifstream infc[ctrlFiles.size()];
-  for (int i = 0;i<ctrlFiles.size();i++)
-	{
-	  infc[i].open(ctrlFiles[i].c_str());
-	  if(!infc[i])
-		{
-		  failmessage.append("Could not open ctrlfile '" + ctrlFiles[i]  + "' (does the file exist?)\n");
-		  fail = true;
-		}
-	}
+  if(!fail)
+	for (int i = 0;i<ctrlFiles.size();i++)
+	  {
+		infc[i].open(ctrlFiles[i].c_str());
+		if(!infc[i])
+		  {
+			failmessage.append("Could not open ctrlfile '" + ctrlFiles[i]  + "' (does the file exist?)\n");
+			fail = true;
+		  }
+	  }
 	  
   // Check outfile and readability. 
 
@@ -161,7 +163,8 @@ int main(int argc, char* argv[])
       fail = true;
     }
   ofstream outf;  
-  outf.open(outFile.c_str(),ios::trunc);
+  if(!fail)
+	outf.open(outFile.c_str(),ios::trunc);
   if(!outf)
     {
       failmessage.append("Could not open outfile '" + outFile + "' (do we have permission ?)\n");
