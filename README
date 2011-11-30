@@ -1,0 +1,65 @@
+
+
+
+This is an implementation of the proposed normalization strategy in Enroth, Andersson et al, "A strand specific high resolution normalization method for chip-sequencing data employing multiple experimental control measurements", submitted manuscript. 
+
+The program is intended to be run in commandline on a linux/unix/max-type system. The program 'should' be able to run under e.g. Windows but this has not been tested. 
+
+*****************
+* Prerequisites *
+*****************
+
+The implementation relies on elements from Gnu Scientific Library (GSL) which must be installed before compiling. The libraries can be downloaded from "http://www.gnu.org/s/gsl" 
+
+If GSL is not installed in '/opt/local/' the following lines in the Makefile must be changed to the install directories.  
+GSLFLAGS_C = -I/opt/local/include 
+GSLFLAGS_L = -L/opt/local/lib -lgsl -lgslcblas -lm "
+
+
+*****************
+* Installation  *
+*****************
+
+The program should compile nicly by simply typing Make in the directory containing the Makefile. The executable program 'ftumch2' is located in the 'bin/' directory. 
+
+
+***********
+* Running *
+***********
+
+The program only accepts data in the bed-format. The files need to be sorted on chromsome and position. The ChIP and Control files need not contain information on the same chromsomes but the common ones must come in the same order. 
+
+The required and optional parameters to the program can be seen by typing "bin/ftumch2" without any parameters. The program should the dispaly the following:
+
+
+Strand-Specific-Normalization-of-ChIP-seq-Data$>bin/ftumch2 
+
+infile (-i) must be specified.
+Could not open infile '' (does the file exist?)
+at least one control file (-c) must be specified.
+outfile (-o) must be specified.
+
+usage bin/ftumch2 [Parameters]
+	-i  <infile, BED-formated file containing the ChIP-reads, sorted on chromosome and position.>
+	-c  <space\tab separataed list of infile(s), BED-formated file(s) 
+	    containing the control-reads (e.g. Input/IgG et cetera), sorted as the file given in '-i' 
+	-o  <outfile, BED-formated file of resulting reads after normalization, 
+	    with read lengths as defined by -l>
+	-rl <read length, defaults to 50 >
+	-cs <chunk size, number of bp considered at a time when building the model>
+	-ws <window size, at every point used to build the model a window of +/- 
+	    this size is averaged to create an observed data point.>
+	-iv <interval, the step size determining the distance between points 
+	     used as observations in the regression model.>
+	-v  <set verbose>
+example: 
+bin/ftumch2 -i myreads.bed -c input.bed igg.bed noise.bed -o normalized.bed -rl 50 -cs 100000 -ws 5 -iv 5 
+
+Strand-Specific-Normalization-of-ChIP-seq-Data$>
+
+In the example/ directory there are two small example files which can be given to the program via the "-i and "-c" parameters. 
+On a iMAC running OSX10.5.8 with default parameters to the program, normalizing a dataset with 1.6M ChIP-reads and 1.4M Input-reads on human Chr1 took around 75 seconds and used a maximum of 1.9Gb of RAM. The program used ca 1Gb for storing the read locations and an additional 900Mb for the regression step. 
+
+
+
+

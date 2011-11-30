@@ -40,9 +40,9 @@ int main(int argc, char* argv[])
   string errorLine = "usage " + 
     string(argv[0]) + 
     " [Parameters]\n" +  
-    "\t-i  <infile, BED-formated file containing the ChIP-reads for one chromosome only, sorted.>\n" +
+    "\t-i  <infile, BED-formated file containing the ChIP-reads, sorted on chromosome and position.>\n" +
 	"\t-c  <space\\tab separataed list of infile(s), BED-formated file(s) \n" + 
-    "\t    containing the control-reads (e.g. Input/IgG et cetera) for the same chromosome as in '-i' \n" +  
+    "\t    containing the control-reads (e.g. Input/IgG et cetera), sorted as the file given in '-i' \n" +  
     "\t-o  <outfile, BED-formated file of resulting reads after normalization, \n" + 
 	"\t    with read lengths as defined by -l>\n" + 
     "\t-rl <read length, defaults to 50 >\n" + 
