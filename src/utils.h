@@ -35,11 +35,11 @@
 #include <cassert>
 #include <cstdlib>
 #include <cfloat>
+#include <cstring>
+
 #include <math.h>
 
 typedef unsigned short storageType; 
-const int MAXNR = USHRT_MAX;
-const int CHUNK_SIZE = 32*USHRT_MAX;
 
 using namespace std;
 
